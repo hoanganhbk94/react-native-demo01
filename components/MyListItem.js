@@ -7,18 +7,17 @@ import {
   Text,
   TouchableOpacity
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 export default class MyListItem extends PureComponent {
   _onPress = () => {
-    this.props.onPressItem(this.props.id);
+    this.props.onPressItem(this.props.item);
   };
 
   render() {
     return (
       <TouchableOpacity onPress={this._onPress}>
         <View style={styles.container}>
-          <Text>{this.props.id}. {this.props.title}</Text>
+          <Text>{this.props.item.id}. {this.props.item.title}</Text>
         </View>
       </TouchableOpacity>
     );
@@ -36,7 +35,3 @@ const styles = StyleSheet.create({
     borderBottomColor: 'gray'
   }
 });
-
-MyListItem.propType = {
-  title: PropTypes.string
-}

@@ -3,7 +3,6 @@ import {
   View,
   Text
 } from 'react-native';
-import PropTypes from 'prop-types';
 
 export default class CourseDetail extends Component {
 
@@ -16,13 +15,9 @@ export default class CourseDetail extends Component {
 
     return (
       <View>
-        <Text>Hello, {params.id}!!!</Text>
+        <Text>Hello, {params.item.title}!!!</Text>
       </View>
     );
   }
 
-}
-
-CourseDetail.propType = {
-  courseName: PropTypes.string
 }
