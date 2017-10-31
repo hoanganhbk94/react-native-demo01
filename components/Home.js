@@ -8,7 +8,6 @@ import {
 } from 'react-native';
 import MyListItem from './MyListItem';
 import Course from '../model/Course';
-import CourseDetail from './CourseDetail';
 
 export default class Home extends Component {
   static navigationOptions = ({ navigation }) => ({

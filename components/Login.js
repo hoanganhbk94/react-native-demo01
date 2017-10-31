@@ -81,9 +81,9 @@ export default class Login extends Component {
         this.setState(Object.assign({showProgress: false}, results));
         if(this.state.badCrentials || this.state.unknownError) {
           //AlertManager.showWarningAlert("Warning", "Email or password is incorrect");
-          navigate('Home');
+          navigate('AppContainer');
         } else {
-          navigate('Home');
+          navigate('AppContainer');
         }
       });
     }
