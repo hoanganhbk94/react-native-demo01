@@ -8,24 +8,26 @@ import {
   Alert,
   Image,
   Dimensions,
-  ActivityIndicatorIOS
+  ActivityIndicator
 } from 'react-native';
-import { Buffer } from 'buffer';
+import {Buffer} from 'buffer';
 import LoginAPI from '../api/LoginAPI';
+import AlertManager from '../common/AlertManager';
+import Validation from '../common/Validation';
 
 export default class Login extends Component {
-  static navigationOptions = {
-    title: 'Github'
-  };
-
   constructor(props) {
     super(props);
     this.state = {
       email: '',
       password: '',
-      showProgress: true
+      showProgress: false
     };
   }
+
+  static navigationOptions = {
+    title: 'Github'
+  };
 
   render() {
     const { navigate } = this.props.navigation;
@@ -34,7 +36,8 @@ export default class Login extends Component {
       <View style={styles.container}>
         <Image
           source={{uri: 'icon_github'}}
-          style={styles.logo}/>
+          style={styles.logo}
+        />
         <TextInput
           style={styles.textField}
           placeholder="Email"
@@ -43,7 +46,7 @@ export default class Login extends Component {
         <TextInput
           style={styles.textField}
           placeholder="Password"
-          secureTextEntry='true'
+          secureTextEntry={true}
           onChangeText={(text) => this.setState({password: text})}
         />
         <TouchableOpacity
@@ -51,41 +54,39 @@ export default class Login extends Component {
           onPress={() => {this.login()}}>
           <Text style={styles.titleButton}>LOG IN</Text>
         </TouchableOpacity>
+        <ActivityIndicator
+          animating={this.state.showProgress}
+          size='large'
+        />
       </View>
     );
   }
 
   login() {
+    this.setState({showProgress: true});
+
     const { navigate } = this.props.navigation;
     var email = this.state.email;
     var password = this.state.password;
-    // if (LoginAPI.loginWithEmailAndPassword(email, password)) {
-    //   console.log('Login successfull');
-    //   navigate( 'Home' );
-    // } else {
-    //   console.log('Email or password is invalid');
-    //   Alert.alert(
-    //     'Warning',
-    //     'Email or password is invalid',
-    //     [],
-    //     { cancelable: true }
-    //   );
-    // }
-    var b = new Buffer(this.state.email + ':' + this.state.password);
-    var encodeAuth = b.toString('base64');
-    //
-    // fetch('https://api.github.com/user', {
-    //   headers: {
-    //     'Authorization' : 'Basic' + encodeAuth
-    //   }
-    // })
-    // .then((response) => {
-    //   return response.json();
-    // })
-    // .then((results)=> {
-    //   console.log(results);
-    // })
-    LoginAPI.postData('https://api.github.com/user', email, password);
+
+    if(!Validation.validateEmail(email) || !Validation.validatePasword(password)) {
+      AlertManager.showWarningAlert("Warning", "Email or password is invalid");
+      this.setState({showProgress: false});
+    } else {
+      var loginAPI = new LoginAPI();
+      loginAPI.login({
+        email: this.state.email,
+        password: this.state.password
+      }, (results) => {
+        this.setState(Object.assign({showProgress: false}, results));
+        if(this.state.badCrentials || this.state.unknownError) {
+          //AlertManager.showWarningAlert("Warning", "Email or password is incorrect");
+          navigate('Home');
+        } else {
+          navigate('Home');
+        }
+      });
+    }
   }
 }
 
@@ -124,9 +125,3 @@ const styles = StyleSheet.create({
     fontSize: 20
   }
 });
-
-// <ActivityIndicatorIOS
-//   animating={this.state.showProgress}
-//   style={{height: 80}}
-//   size="large"
-// />
