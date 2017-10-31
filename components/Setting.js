@@ -6,6 +6,10 @@ import {
 } from 'react-native';
 
 export default class Setting extends Component {
+  static navigationOptions = ({ navigation }) => ({
+    title: 'Setting'
+  });
+
   render() {
     return (
       <View style={styles.container}>
