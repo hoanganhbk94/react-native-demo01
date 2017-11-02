@@ -38,16 +38,14 @@ export default class AppContainer extends Component {
           title="Home"
           icon={{uri: 'ic_home_white', scale: 2}}
           selected={this.state.selectedTab == 'home'}
-          onPress={() => this.setState({selectedTab: 'home'})}
-        >
+          onPress={() => this.setState({selectedTab: 'home'})} >
           <HomeNavigator/>
         </TabBarIOS.Item>
         <TabBarIOS.Item
           title="Setting"
           icon={{uri: 'ic_settings_white', scale: 2}}
           selected={this.state.selectedTab == 'setting'}
-          onPress={() => this.setState({selectedTab: 'setting'})}
-        >
+          onPress={() => this.setState({selectedTab: 'setting'})} >
           <SettingNavigator/>
         </TabBarIOS.Item>
       </TabBarIOS>

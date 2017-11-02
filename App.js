@@ -11,10 +11,10 @@ import {
   View
 } from 'react-native';
 import {StackNavigator} from 'react-navigation';
-import AppContainer from './components/AppContainer';
-import Home from './components/Home';
-import Login from './components/Login';
-import CourseDetail from './components/CourseDetail';
+import AppContainer from './src/components/AppContainer';
+import Home from './src/components/Home';
+import Login from './src/components/Login';
+import CourseDetail from './src/components/CourseDetail';
 
 const SimpleApp = StackNavigator({
   Login: {screen : Login},

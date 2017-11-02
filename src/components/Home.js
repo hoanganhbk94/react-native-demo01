@@ -4,8 +4,10 @@ import {
   Text,
   StyleSheet,
   Button,
-  FlatList
+  FlatList,
+  TouchableOpacity
 } from 'react-native';
+import { NavigationActions } from 'react-navigation';
 import MyListItem from './MyListItem';
 import Course from '../model/Course';
 
@@ -13,6 +15,11 @@ export default class Home extends Component {
   static navigationOptions = ({ navigation }) => ({
     title: 'Home'
   });
+
+  constructor(props) {
+    super(props);
+    this.state = {title: 'Logout'};
+  }
 
   state = {selected: (new Map(): Map<string, boolean>)};
 
@@ -26,14 +33,14 @@ export default class Home extends Component {
     });
     const { navigate } = this.props.navigation;
     console.log(`Click me ${course.id}`);
-    navigate('CourseDetail', { item : course} );
+    navigate('CourseDetail', {item : course} );
   };
 
   _renderItem = ({item}) => (
     <MyListItem
       item={item}
       onPressItem={this._onPressItem}
-      selected={!!this.state.selected.get(item.id)}
+      // selected={!!this.state.selected.get(item.id)}
     />
   );
 
@@ -44,13 +51,26 @@ export default class Home extends Component {
     return (
       <View style={styles.container}>
         <FlatList
+          style={{flex: 3}}
           data={data}
           //extraData={this.state}
           //keyExtrator={this._keyExtrator}
           renderItem={this._renderItem}
         />
+        <TouchableOpacity
+          style={{flex: 1, justifyContent: 'center', alignItems:'center'}}
+          onPress={() => this.logout()}>
+          <Text>Logout</Text>
+        </TouchableOpacity>
       </View>
     );
+  }
+
+  logout() {
+    const backAction = NavigationActions.back({
+      key: 'Login'
+    });
+    this.props.navigation.dispatch(backAction);
   }
 }
 

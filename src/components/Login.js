@@ -69,24 +69,26 @@ export default class Login extends Component {
     var email = this.state.email;
     var password = this.state.password;
 
-    if(!Validation.validateEmail(email) || !Validation.validatePasword(password)) {
-      AlertManager.showWarningAlert("Warning", "Email or password is invalid");
-      this.setState({showProgress: false});
-    } else {
-      var loginAPI = new LoginAPI();
-      loginAPI.login({
-        email: this.state.email,
-        password: this.state.password
-      }, (results) => {
-        this.setState(Object.assign({showProgress: false}, results));
-        if(this.state.badCrentials || this.state.unknownError) {
-          //AlertManager.showWarningAlert("Warning", "Email or password is incorrect");
-          navigate('AppContainer');
-        } else {
-          navigate('AppContainer');
-        }
-      });
-    }
+    // if(!Validation.validateEmail(email) || !Validation.validatePasword(password)) {
+    //   AlertManager.showWarningAlert("Warning", "Email or password is invalid");
+    //   this.setState({showProgress: false});
+    // } else {
+    //   var loginAPI = new LoginAPI();
+    //   loginAPI.login({
+    //     email: this.state.email,
+    //     password: this.state.password
+    //   }, (results) => {
+    //     this.setState(Object.assign({showProgress: false}, results));
+    //     if(this.state.badCrentials || this.state.unknownError) {
+    //       //AlertManager.showWarningAlert("Warning", "Email or password is incorrect");
+    //       navigate('AppContainer');
+    //     } else {
+    //       navigate('AppContainer');
+    //     }
+    //   });
+    // }
+
+    navigate('AppContainer');
   }
 }
 
